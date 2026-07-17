@@ -6,10 +6,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
-    <title>j-town — where the mechanisms hang out</title>
+    <title>j-town — 48 agents, one mechanism, zero dependencies, in your browser</title>
     <meta
       name="description"
-      content="jspace is the physics. j-town is the town built on it — a browser + headless multi-agent showcase of the foundry mechanisms. No server, no external requests."
+      content="A deterministic multi-agent town: Kuramoto sync, agreement gates that never average, fold fidelity, receipts, and human-signoff graduation. Same seed, same town — share a ?seed= permalink. No server, no requests."
     />
     <style>
       /* ---- lab tokens (//ZERO design language) ---- */
@@ -361,6 +361,7 @@
         <button id="reset">RESET</button>
         <label class="sr" for="seed">seed</label>
         <input id="seed" type="number" value="42" aria-label="seed" />
+        <button id="permalink" title="copy a link that replays this exact town">LINK</button>
       </div>
       <div class="group" role="group" aria-label="mood bar — steer the featured resident">
         <span id="featlbl">steer <b>ember</b> →</span>
@@ -379,8 +380,10 @@
         &nbsp;·&nbsp; physics:
         <a href="https://github.com/Intuition-Labs-LLC/jspace">jspace</a>,
         <a href="https://github.com/Intuition-Labs-LLC/sheaf">sheaf</a>
-        &nbsp;·&nbsp; workspace:
-        <a href="https://transformer-circuits.pub/2026/workspace/index.html">the global-workspace paper</a>
+        &nbsp;·&nbsp; the J-space paper:
+        <a href="https://transformer-circuits.pub/2026/workspace/index.html">Gurnee, Sofroniew et&nbsp;al. (Anthropic, 2026)</a>
+        &nbsp;·&nbsp; gate your own lens file:
+        <a href="https://intuition-labs-llc.github.io/lens.html">lens-gate</a>
         &nbsp;·&nbsp; execute on nets:
         <a href="https://github.com/wheattoast11/observable-computation/tree/main/packages/py2bend">gate with jspace, run on py2bend</a>
       </div>
@@ -388,6 +391,10 @@
         AGPL-3.0-or-later · © 2026 Intuition Labs LLC · the dashed |ψ⟩ circle and
         concentric rings are a visual language, not a claim about quantum states —
         the physics here is classical: phase coupling, agreement, folding, net reduction.
+        Not affiliated with Anthropic: jspace externalizes ideas from their published
+        paper (Gurnee, Sofroniew et&nbsp;al., Transformer Circuits 2026) and cites them;
+        no code was copied. The lens is their published work. We build storage, gates,
+        and receipts under it.
       </div>
     </footer>
 

@@ -11,6 +11,7 @@ import { createTown } from './town/index.js';
 import { PLAZA_CENTER, NEIGHBOR_RADIUS } from './town/plaza.js';
 import { KURAMOTO_SYNC } from './physics/kuramoto.js';
 import { MOOD_NAMES } from './town/moods.js';
+import { seedFromSearch, searchForSeed } from './urlstate.js';
 
 const C = {
   w: '#fff',
@@ -72,8 +73,19 @@ function boot() {
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const seedInput = document.getElementById('seed');
+  const urlSeed = seedFromSearch(window.location.search);
+  if (urlSeed !== null && seedInput) seedInput.value = String(urlSeed);
   let seed = clampSeed(seedInput && seedInput.value);
   let town = createTown({ seed });
+  writeSeedToUrl(seed);
+
+  function writeSeedToUrl(sd) {
+    try {
+      window.history.replaceState(null, '', window.location.pathname + searchForSeed(sd));
+    } catch {
+      // file:// or a restrictive context — the permalink control still works off href
+    }
+  }
 
   let featured = 0;
   const trails = new Map(); // id -> [{x,y}...]
@@ -480,12 +492,28 @@ function boot() {
   if (resetBtn)
     resetBtn.addEventListener('click', () => {
       seed = clampSeed(seedInput && seedInput.value);
+      writeSeedToUrl(seed);
       unsub();
       town.act({ type: 'reset', seed });
       unsub = subscribeTown();
       featured = 0;
       setFeatured(0);
       draw();
+    });
+
+  const linkBtn = document.getElementById('permalink');
+  if (linkBtn)
+    linkBtn.addEventListener('click', async () => {
+      const url = window.location.href.split('?')[0] + searchForSeed(seed);
+      try {
+        await navigator.clipboard.writeText(url);
+        linkBtn.textContent = 'COPIED';
+      } catch {
+        linkBtn.textContent = url; // clipboard unavailable: show it, let them copy
+      }
+      setTimeout(() => {
+        linkBtn.textContent = 'LINK';
+      }, 1600);
     });
 
   document.querySelectorAll('.mood').forEach((b) =>
